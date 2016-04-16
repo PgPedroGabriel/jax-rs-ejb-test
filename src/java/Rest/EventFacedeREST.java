@@ -14,10 +14,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import jsonResponse.ResultDefault;
 import Entities.Event;
-import java.nio.charset.Charset;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 import jsonRequest.EventLocation;
 
 /**
@@ -25,10 +25,14 @@ import jsonRequest.EventLocation;
  * @author pedro
  */
 @Path("entities.event")
-public class EventFacedeREST extends AbstractFacadeREST{
+public class EventFacedeREST extends AbstractREST{
     
     @EJB private EventDAOBean controller;
-    
+/*
+    public EventFacedeREST(@Context HttpServletRequest request) {
+        super(request);
+    }
+*/    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getEvents(){

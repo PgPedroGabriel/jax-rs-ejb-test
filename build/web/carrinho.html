@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="ingressoOnlineCarrinho">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IngressosOnline.com</title>
+        <script src="libs/angular.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/boostrap.css">        
+        <script>
+            angular.module("ingressoOnlineCarrinho", []);
+            angular.module("ingressoOnlineCarrinho").controller("ingressoOnlineCarrinhoController", function($scope){
+                           
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="cabecalho">
+                <div class="title_cabecalho">
+                    IngressoOnline.com
+                </div>
+            </div>
+            <div class="menu"></div>            
+        </header>
+        
+        <div class="container" ng-controller="ingressoOnlineCarrinhoController"> 
+            <div class="cabecalho_container">Carrinho</div>
+            <div class="carrinho_container">
+                <div>
+                    <img src="http://imguol.com/c/noticias/2013/07/10/para-colocar-a-da-imagem-acima-no-facebook-aperte-o-botao-mais-no-final-deste-texto-com-a-imagem-aberta-use-o-botao-direito-do-mouse-escolha-salvar-imagem-como-e-defina-onde-o-conteudo-sera-1373477211383_851x315.jpg">
+                </div>
+                <div id="carrinho_descricao">Notebook 2 em 1 Positivo Duo ZX3040 Intel Atom Quad Core 1GB 16GB Tela LED 10" W10 - Prata</div>
+                <select id="carrinho_quantidade">
+                    <option id="1">1</option>
+                    <option id="2">2</option>
+                    <option id="3">3</option>
+                    <option id="4">4</option>
+                    <option id="5">5</option>
+                    <option id="6">6</option>
+                    <option id="7">7</option>
+                </select>
+                <div id="carrinho_total">R$100,00</div>
+            </div>
+            <button class="button" style="float: right; width: 150px; margin: 10px 0px 0px 0px;">Finalizar compra</button>
+        </div>
+        
+        <footer>
+            <div class="container_footer"></div>
+        </footer>
+    </body>
+</html>
+

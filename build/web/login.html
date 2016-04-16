@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="ingressoOnlineLogin">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IngressosOnline.com</title>
+        <script src="libs/angular.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/boostrap.css">        
+        <script>
+            angular.module("ingressoOnlineLogin", []);
+            angular.module("ingressoOnlineLogin").controller("ingressoOnlineLoginController", function($scope, $http){
+                $scope.login = '';
+                $scope.password = '';
+                $scope.messageErro = null;
+
+                $scope.Connect = function(){
+                    $scope.messageErro = "Aguarde...";
+                    $http({
+                       method: "POST",
+                       url: "webresources/entities.user/login",
+                       data:{ login: $scope.login, password: $scope.password}
+                    }).then(function mySucces(response){
+                        $scope.messageErro = response.data.message;
+                        if(response.data.status){
+                            window.location = "index.html";
+                        }
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="cabecalho">
+                <div class="title_cabecalho">
+                    <a href="index.html">IngressoOnline.com</a>
+                </div>
+            </div>
+            <div class="menu"></div>            
+        </header>
+        
+        <div class="container" ng-controller="ingressoOnlineLoginController"> 
+            <div class="cabecalho_container">Login de Acesso</div>
+            <div class="usuario">
+                <label>Login:</label>
+                <input type="text" ng-model="login">
+                <label>Senha:</label>
+                <input type="text" ng-model="password">
+                <button class="button" ng-click="Connect()">Enviar</button>
+                <p>Clique <a href="cadastro.html">aqui</a> para fazer o cadastro</p>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container_footer"></div>
+        </footer>
+    </body>
+</html>

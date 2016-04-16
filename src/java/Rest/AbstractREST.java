@@ -7,18 +7,25 @@ package Rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javax.enterprise.context.RequestScoped;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.Context;
 import jsonResponse.ResultDefault;
 
 /**
  *
  * @author pedro
  */
-public abstract class AbstractFacadeREST {
+@RequestScoped
+public abstract class AbstractREST {
     
     protected final Gson gson;
     protected final ResultDefault result;
     
-    public AbstractFacadeREST() {
+    HttpSession session;
+    
+    public AbstractREST() {
         gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
@@ -29,7 +36,6 @@ public abstract class AbstractFacadeREST {
     public ResultDefault setError(String message){
         
         result.setError(message);
-        
         return result;
     }
     

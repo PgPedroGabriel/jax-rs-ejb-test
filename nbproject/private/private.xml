@@ -3,8 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Rest/CoreFacadeREST.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Bean/EventDAOBean.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Rest/EventFacedeREST.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Rest/AbstractFacadeREST.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Bean/CoreSessionBean.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Rest/UserFacadeREST.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Entities/Event.java</file>
             <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/web/index.html</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/jsonRequest/Cart.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Rest/CartFacadeREST.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Bean/CoreInterface.java</file>
+            <file>file:/C:/Users/pedro/Documents/NetBeansProjects/WebApplication5/src/java/Entities/Cart.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,19 +5,12 @@
  */
 package Bean;
 
-import Bean.exceptions.IllegalOrphanException;
-import Bean.exceptions.NonexistentEntityException;
 import Bean.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import Entities.Location;
-import Entities.Buylog;
 import Entities.Event;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -25,7 +18,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 

@@ -8,29 +8,30 @@ package Rest;
 import Bean.CoreSessionBean;
 import Bean.UserDAOBean;
 import Entities.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import jsonRequest.Login;
-import jsonResponse.ResultDefault;
 
 /**
  *
  * @author pedro
  */
 @Path("entities.user")
-public class UserFacadeREST extends AbstractFacadeREST{
-
+public class UserFacadeREST extends AbstractREST{
+    
     @EJB private UserDAOBean controller;
+    
     @EJB private CoreSessionBean core;
     
-    public UserFacadeREST() {
-    }
+    @EJB private UserDAOBean userBean;
+    
+    @Context HttpServletRequest request;
     
     @POST
     @Path("register")
@@ -38,13 +39,25 @@ public class UserFacadeREST extends AbstractFacadeREST{
     @Consumes(MediaType.APPLICATION_JSON)
     public String register(User user){
         
-        try{
+        try{ 
+            User userExists = controller.verifyLogin(user.getLogin());
+            
+            if(userExists != null){
+                return jsonError("Login já existe, informe outro");
+            }
+            
+        } catch(Exception e) {}
+           
+        try {    
             controller.create(user);
+            
+            session = request.getSession();
+            session.setAttribute("user", user.getId());
             
             result.setSuccess(user);
 
         } catch (Exception e){
-            return jsonError("Falha em criar usuario");
+            return jsonError(e.getMessage());
         }
 
         return jsonSuccess();
@@ -56,16 +69,14 @@ public class UserFacadeREST extends AbstractFacadeREST{
     @Consumes(MediaType.APPLICATION_JSON)
     public String doLogin(Login loginRequest){
         
-        if(core.isLogged()){
-            return jsonError("Já existe uma sessão criada.");
-        }
-        
         try {
             User user = controller.verifyLogin(loginRequest.getLogin());
 
             if(user.getPassword().equals(loginRequest.getPassword())){
                 
                 result.setSuccess(user);
+                session = request.getSession();
+                session.setAttribute("user", user.getId());
                 core.setUser(user);
                 
             } else {
@@ -74,6 +85,19 @@ public class UserFacadeREST extends AbstractFacadeREST{
             
         } catch(Exception e){
             return jsonError("Login/Senha inválido");
+        }
+        
+        return jsonSuccess();
+    }
+
+    @POST
+    @Path("logout")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String doLogout(){
+        session = request.getSession();
+        
+        if(session != null && session.getAttribute("user") != null){
+            session.removeAttribute("user");
         }
         
         return jsonSuccess();

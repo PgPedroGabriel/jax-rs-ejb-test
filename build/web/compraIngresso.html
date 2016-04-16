@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="ingressoOnlineCompraIngresso">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IngressosOnline.com</title>
+        <script src="libs/angular.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/boostrap.css">        
+        <script>
+            angular.module("ingressoOnlineCompraIngresso", []);
+            angular.module("ingressoOnlineCompraIngresso").controller("ingressoOnlineCompraIngressoController", function($scope, $http){
+                $scope.login = '';
+                $scope.password = '';
+                $scope.messageErro = null;
+                
+                var url = window.location.search;
+                var id = url.split("=");
+                id = id[1];
+
+                $scope.FinalizarCompra = function(){
+                    window.location = "carrinho.html?id=" + id;
+                };
+                
+                $scope.event = {};
+                
+                var url = "webresources/entities.event/"+id;
+
+                $http({
+                    method: "GET",
+                    url: url
+                }).then(function(response){
+                    if(response.data.status){
+                        $scope.event = response.data.data;
+                    }
+                    else{
+                        window.location = "index.html";
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="cabecalho">
+                <div class="title_cabecalho">
+                    <a href="index.html">IngressoOnline.com</a>
+                </div>
+            </div>
+            <div class="menu"></div>            
+        </header>
+        
+        <div class="container" ng-controller="ingressoOnlineCompraIngressoController"> 
+            <div class="cabecalho_container">Comprar Ingresso</div>
+            <div class="compra_ingresso_container">
+                <div id="name_evento">{{event.name}}</div>
+                <img id="image_evento" src="{{event.imagepath}}">
+                <div id="container_compra_description">
+                    <div id="fulldescription_evento">
+                        <div>Detalhes</div>
+                         {{event.fulldescription}}
+                    </div>
+                    <div id="detalhe_ingresso">
+                        <div id="title_ingresso">Ingresso</div>
+                        <div id="valor_total_evento">
+
+                            TOTAL <span>R${{event.price}}</span></div>
+                    </div>
+                </div>
+                <button class="button" ng-click="FinalizarCompra()">Comprar</button>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container_footer"></div>
+        </footer>
+    </body>
+</html>
+

@@ -1,16 +1,87 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html ng-app="ingressoOnline">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IngressosOnline.com</title>
+        <script src="libs/angular.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        
+        <script>
+            var app = angular.module("ingressoOnline", []);
+            
+            app.controller("ingressoOnlineController", function($scope, $http){
+
+                $scope.arrEvents  = [];
+        
+                $http({
+                       method: "GET",
+                       url: "webresources/entities.event"
+                       
+                    }).then(function mySucces(response)
+                    {
+                       $scope.arrEvents = response.data.data;
+
+                    });
+                   
+                $scope.userLogged = null;
+        
+                $http({
+                    method: "GET",
+                    url: "webresources/core"
+                }).then(function (response){
+                    var handle = response.data;
+                    console.log(handle);
+                    if(handle.status && typeof handle.data.user !== "undefined" && handle.data.user !== null){
+                        $scope.userLogged = handle.data.user;
+                        console.log($scope.userLogged);
+                    }
+                });    
+                
+                
+                $scope.logout = function(){
+                    $http({
+                        method: "POST",
+                        url: "webresources/entities.user/logout"
+                    }).then(function (response){
+                       window.location.reload();
+                    }); 
+                }
+            });
+        </script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body  ng-controller="ingressoOnlineController">
+        <header>
+            <div class="cabecalho">
+                <div class="title_cabecalho">
+                    <a href="index.html">IngressoOnline.com</a>
+                </div>
+            </div>
+            <div class="menu">
+                <div ng-if="userLogged === null">
+                    {{userLogged.name}}
+                <a href="login.html">login</a>&nbsp;&nbsp;<a href="cadastro.html">cadastro</a>
+                </div>
+                <div ng-if="userLogged !== null">
+                    {{userLogged.name}} <a href="#" ng-click="logout();">Sair</a>
+                </div>
+            </div>            
+        </header>
+        
+        <div class="container"> 
+            <div class="cabecalho_container">Bem vindo</div>
+            <div class="cabecalho_container">Venda de Ingressos</div>
+            <div class="ingressos" ng-repeat="evento in arrEvents">
+                <div class="imagem_evento" ng-style="{'background-image': 'url(' + evento.imagepath + ')'}">
+                    <div class="info_evento">
+                        <div class="descricao_evento">{{evento.shortdescription}}</div>
+                        <button class="button"><a href="compraIngresso.html?event={{evento.id}}">COMPRAR</a></button>     
+                    </div>
+                </div>                
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container_footer"></div>
+        </footer>
     </body>
 </html>

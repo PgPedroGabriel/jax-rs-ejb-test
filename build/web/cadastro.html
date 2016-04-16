@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="ingressoOnlineCadastro">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>IngressosOnline.com</title>
+        <script src="libs/angular.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/boostrap.css">        
+        <script>
+            angular.module("ingressoOnlineCadastro", []);
+            angular.module("ingressoOnlineCadastro").controller("ingressoOnlineCadastroController", function($scope, $http){
+
+                $scope.nome = '';
+                $scope.login = '';
+                $scope.password = '';
+                $scope.messageErro = null;
+
+                $scope.CadastroUsuario = function(){
+                    $scope.messageErro = "Aguarde...";
+                    $http({
+                       method: "POST",
+                       url: "webresources/entities.user/register",
+                       data:{login: $scope.login, password: $scope.password, name: $scope.name}
+                    }).then(function mySucces(response){
+                        $scope.messageErro = response.data.message;
+                        if(response.data.status){
+                            setTimeout(function(){
+                                window.location = "index.html";
+                            }, 1000);
+                        }
+                    });
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="cabecalho">
+                <div class="title_cabecalho">
+                    <a href="index.html">IngressoOnline.com</a>
+                </div>
+            </div>
+            <div class="menu"></div>            
+        </header>
+        
+        <div class="container" ng-controller="ingressoOnlineCadastroController"> 
+            <div class="cabecalho_container">Cadastro de Usuário</div>
+            <div class="usuario">
+                <label>Nome:</label>
+                <input type="text" ng-model="name">
+                <label>Login:</label>
+                <input type="text" ng-model="login">
+                <label>Senha:</label>
+                <input type="text" ng-model="password">
+                <span ng-if="messageErro != null">{{messageErro}}</span>
+                <button class="button" ng-click="CadastroUsuario()">Enviar</button>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container_footer"></div>
+        </footer>
+    </body>
+</html>

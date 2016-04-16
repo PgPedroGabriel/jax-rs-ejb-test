@@ -9,10 +9,12 @@ import Bean.CoreSessionBean;
 import Bean.EventDAOBean;
 import Entities.Event;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import jsonRequest.Cart;
 
@@ -21,11 +23,19 @@ import jsonRequest.Cart;
  * @author pedro
  */
 @Path("entities.cart")
-public class CartFacadeREST extends AbstractFacadeREST {
+public class CartFacadeREST extends AbstractREST {
     
+    @EJB private EventDAOBean eventController;
+  
     @EJB private CoreSessionBean core;
-    @EJB private EventDAOBean    eventController;
     
+    @Context HttpServletRequest request;
+    
+/*    
+    public CartFacadeREST(@Context HttpServletRequest request) {;
+        super(request);
+    }
+   */ 
     @Path("add")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,8 +47,16 @@ public class CartFacadeREST extends AbstractFacadeREST {
             if(event == null)
                 return jsonError("Evento inválido");
             
+            session = request.getSession();
+            
+            if(session.getAttribute("cart") != null){
+                core.setCart((Entities.Cart) session.getAttribute("cart"));
+            }
+            
             core.addInCart(event, cart.getQuantity());
-
+            
+            //session.setAttribute("cart", core.getCart());
+            
             result.setSuccess(core.getCart());
             
             return jsonSuccess();
@@ -61,7 +79,15 @@ public class CartFacadeREST extends AbstractFacadeREST {
             if(event == null)
                 return jsonError("Evento inválido");
             
+            session = request.getSession();
+            
+            if(session.getAttribute("cart") != null){
+                core.setCart((Entities.Cart) session.getAttribute("cart"));
+            }
+            
             core.removeInCart(event, cart.getQuantity());
+            
+            //session.setAttribute("cart", core.getCart());
             
             result.setSuccess(core.getCart());
             

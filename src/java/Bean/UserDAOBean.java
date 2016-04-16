@@ -54,21 +54,8 @@ public class UserDAOBean {
         try {
             utx.begin();
             Collection<Buy> attachedBuyCollection = new ArrayList<Buy>();
-            for (Buy buyCollectionBuyToAttach : user.getBuyCollection()) {
-                buyCollectionBuyToAttach = em.getReference(buyCollectionBuyToAttach.getClass(), buyCollectionBuyToAttach.getId());
-                attachedBuyCollection.add(buyCollectionBuyToAttach);
-            }
             user.setBuyCollection(attachedBuyCollection);
             em.persist(user);
-            for (Buy buyCollectionBuy : user.getBuyCollection()) {
-                User oldUserIdOfBuyCollectionBuy = buyCollectionBuy.getUserId();
-                buyCollectionBuy.setUserId(user);
-                buyCollectionBuy = em.merge(buyCollectionBuy);
-                if (oldUserIdOfBuyCollectionBuy != null) {
-                    oldUserIdOfBuyCollectionBuy.getBuyCollection().remove(buyCollectionBuy);
-                    oldUserIdOfBuyCollectionBuy = em.merge(oldUserIdOfBuyCollectionBuy);
-                }
-            }
             utx.commit();
         } catch (Exception ex) {
             try {

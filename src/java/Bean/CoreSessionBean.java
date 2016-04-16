@@ -5,21 +5,16 @@
  */
 package Bean;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.json.Json;
-import javax.json.JsonObject;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author pedro
  */
-@Singleton
+@Stateless
 public class CoreSessionBean{
 
     // Add business logic below. (Right-click in editor and choose
@@ -27,14 +22,14 @@ public class CoreSessionBean{
     
     private Entities.User user;
     private Entities.Cart cart;
-
+    
+    
     @PostConstruct
     public void initialize() {
         cart = new Entities.Cart();
         user = null;
     }
-    
-    
+
     public Entities.User getUser() {
         return user;
     }
@@ -71,4 +66,5 @@ public class CoreSessionBean{
         
         return map;
     }
+    
 }
